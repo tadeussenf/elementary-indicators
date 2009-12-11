@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/gnome.mk
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+
+DEB_CONFIGURE_EXTRA_FLAGS += --enable-gtk-doc
+LDFLAGS += -Wl,-z,defs -Wl,--as-needed
+
+binary-post-install/indicator-application::
+	find debian/indicator-application/usr/lib -name \*.la -exec rm {} \;
+	find debian/indicator-application/usr/lib -name \*.a -exec rm {} \;

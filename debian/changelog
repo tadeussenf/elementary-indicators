@@ -1,0 +1,103 @@
+indicator-application (0.0.4-0ubuntu1) lucid; urgency=low
+
+  * Upstream release 0.0.4
+  * debian/rules:
+    - removed the disable-scrollkeeper configure arg
+    - don't include .la and .a files
+  * debian/patches/clean_up_docs.patch
+    - removed, merged upstream
+  * debian/control:
+    - removed Build-Depend for scrollkeeper
+    - libappindicator-dev needs to depend on libdbusmenu-glib-dev
+    - bump standards version to 3.8.3
+    - libappindicator-doc doesn't need to depend on libappindicator0
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Fri, 11 Dec 2009 09:18:58 -0500
+
+indicator-application (0.0.3-0ubuntu1) lucid; urgency=low
+
+  * Upstream release 0.0.3
+    * Adding in documentation
+    * Adding a pkg-config .pc file for libappindicator
+    * More GtkMenu support in libappindicator
+  * debian/libappindicator-dev.install: Adding pkgconfig files. 
+  * debian/control: Adding a build dep on gtk-doc-tools 
+  * debian/control: Increasing libdbusmenu requirements to 0.1.8
+
+  [Ken VanDine]
+  * debian/control
+    - set Vcs-Bzr to ~ubuntu-desktop
+    - set libappindicator-doc arch all
+    - make libappindicator-dev depend on libappindicator0
+  * debian/libappindicator-doc.install
+    - install the developer docs
+  * debian/rules
+    - enable-gtk-doc
+    - added simple-patchsys.mk
+  * debian/patches/clean_up_docs.patch
+    - Remove template values and set a proper title
+  * debian/copyright
+    - Include the proper licenses (LGPL-2.1 and LGPL-3)
+
+ -- Ted Gould <ted@ubuntu.com>  Thu, 10 Dec 2009 13:34:40 -0600
+
+indicator-application (0.0.2-0~ppa3) karmic; urgency=low
+
+  * debian/watch:
+    - Updated url to point to the LP project 
+  * debian/control
+    - Updated Vcs-Bzr, project urls and description
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Thu, 10 Dec 2009 09:00:06 -0500
+
+indicator-application (0.0.2-0ubuntu1~ppa1) karmic; urgency=low
+
+  * Upstream release 0.0.2
+    * Updates API to use GTK instead of dbusmenu to make it
+      easier for upstream developers to use.
+
+ -- Ted Gould <ted@ubuntu.com>  Fri, 04 Dec 2009 14:50:45 -0600
+
+indicator-application (0.0.1-0ubuntu3~ppa4) karmic; urgency=low
+
+  * Adding in copyright headers and licenses
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 02 Dec 2009 12:17:00 -0600
+
+indicator-application (0.0.1-0ubuntu3~ppa3) karmic; urgency=low
+
+  * Massive name change.
+  * debian/* changing packaging to not be "custom" anymore and now
+    everything is "application"
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 02 Dec 2009 12:06:25 -0600
+
+indicator-application (0.0.1-0ubuntu3~ppa2) karmic; urgency=low
+
+  * Implementing the service and having the indicator and app
+    library start using it.
+
+ -- Ted Gould <ted@ubuntu.com>  Wed, 02 Dec 2009 11:58:08 -0600
+
+indicator-application (0.0.1-0ubuntu3~ppa1) karmic; urgency=low
+
+  * Flesh out the library to have stuff working.
+  * Updating test suite to run under dbus-test-runner.
+
+ -- Ted Gould <ted@ubuntu.com>  Tue, 01 Dec 2009 09:17:24 -0600
+
+indicator-application (0.0.1-0ubuntu2) karmic; urgency=low
+
+  * debian/control: Splitting out libappindicator
+  * Adding debian/libappindicator0.install,
+    debian/libappindicator-dev.install,
+    debian/indicator-application.install
+    to make all the different packages.
+
+ -- Ted Gould <ted@ubuntu.com>  Mon, 02 Nov 2009 21:41:20 -0600
+
+indicator-application (0.0.1-0ubuntu1) karmic; urgency=low
+
+  * Development packaging edition.
+
+ -- Robert Collins <robert@canonical.com>  Thu, 29 Oct 2009 15:44:14 +1100
