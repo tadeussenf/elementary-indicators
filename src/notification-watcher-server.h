@@ -53,7 +53,7 @@ G_BEGIN_DECLS
 #endif /* !G_ENABLE_DEBUG */
 
 
-/* NONE:STRING,POINTER (/tmp/dbus-binding-tool-c-marshallers.JUSN4U:1) */
+/* NONE:STRING,POINTER (/tmp/dbus-binding-tool-c-marshallers.73LU4U:1) */
 extern void dbus_glib_marshal__notification_watcher_server_VOID__STRING_POINTER (GClosure     *closure,
                                                                                  GValue       *return_value,
                                                                                  guint         n_param_values,
@@ -97,7 +97,7 @@ dbus_glib_marshal__notification_watcher_server_VOID__STRING_POINTER (GClosure   
 }
 #define dbus_glib_marshal__notification_watcher_server_NONE__STRING_POINTER	dbus_glib_marshal__notification_watcher_server_VOID__STRING_POINTER
 
-/* BOOLEAN:POINTER,POINTER (/tmp/dbus-binding-tool-c-marshallers.JUSN4U:2) */
+/* BOOLEAN:POINTER,POINTER (/tmp/dbus-binding-tool-c-marshallers.73LU4U:2) */
 extern void dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER (GClosure     *closure,
                                                                                      GValue       *return_value,
                                                                                      guint         n_param_values,
@@ -144,7 +144,7 @@ dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER (GClosur
   g_value_set_boolean (return_value, v_return);
 }
 
-/* BOOLEAN:STRING,POINTER (/tmp/dbus-binding-tool-c-marshallers.JUSN4U:3) */
+/* BOOLEAN:STRING,POINTER (/tmp/dbus-binding-tool-c-marshallers.73LU4U:3) */
 extern void dbus_glib_marshal__notification_watcher_server_BOOLEAN__STRING_POINTER (GClosure     *closure,
                                                                                     GValue       *return_value,
                                                                                     guint         n_param_values,

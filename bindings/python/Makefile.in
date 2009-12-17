@@ -14,6 +14,8 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -33,9 +35,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = simple-client$(EXEEXT)
-subdir = example
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+subdir = bindings/python
+DIST_COMMON = $(pkgappindicator_PYTHON) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gtk-doc.m4 \
 	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
@@ -48,17 +50,43 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_simple_client_OBJECTS = simple_client-simple-client.$(OBJEXT)
-simple_client_OBJECTS = $(am_simple_client_OBJECTS)
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
+am__install_max = 40
+am__nobase_strip_setup = \
+  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
+am__nobase_strip = \
+  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
+am__nobase_list = $(am__nobase_strip_setup); \
+  for p in $$list; do echo "$$p $$p"; done | \
+  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
+  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
+    if (++n[$$2] == $(am__install_max)) \
+      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
+    END { for (dir in files) print dir, files[dir] }'
+am__base_list = \
+  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
+  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+am__installdirs = "$(DESTDIR)$(appindicatordir)" \
+	"$(DESTDIR)$(pkgappindicatordir)" "$(DESTDIR)$(defsdir)"
+LTLIBRARIES = $(appindicator_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-simple_client_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(top_builddir)/src/libappindicator.la
+_appindicator_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am__appindicator_la_OBJECTS = appindicatormodule.lo
+nodist__appindicator_la_OBJECTS = appindicator.lo
+_appindicator_la_OBJECTS = $(am__appindicator_la_OBJECTS) \
+	$(nodist__appindicator_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
-simple_client_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(simple_client_CFLAGS) \
-	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+_appindicator_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(AM_CFLAGS) $(CFLAGS) $(_appindicator_la_LDFLAGS) $(LDFLAGS) \
+	-o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -85,8 +113,11 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(simple_client_SOURCES)
-DIST_SOURCES = $(simple_client_SOURCES)
+SOURCES = $(_appindicator_la_SOURCES) \
+	$(nodist__appindicator_la_SOURCES)
+DIST_SOURCES = $(_appindicator_la_SOURCES)
+py_compile = $(top_srcdir)/py-compile
+DATA = $(defs_DATA)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -230,8 +261,8 @@ mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
-pkgpyexecdir = @pkgpyexecdir@
-pkgpythondir = @pkgpythondir@
+pkgpyexecdir = $(pyexecdir)
+pkgpythondir = $(pyexecdir)
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
@@ -245,21 +276,28 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+defsdir = $(datadir)/pygtk/2.0/defs
+defs_DATA = appindicator.defs
 
-#########################################
-#########################################
-simple_client_SOURCES = \
-	simple-client.c
+#CFLAGS = -Wall -Werror
+INCLUDES = \
+		-I$(top_srcdir)/src \
+        -DG_LOG_DOMAIN=\"appindicator-python\" \
+        -DDATADIR=\"$(datadir)\" \
+        -DLIBDIR=\"$(libdir)\" \
+        $(APPINDICATOR_PYTHON_CFLAGS) \
+        $(PYTHON_INCLUDES)
 
-simple_client_CFLAGS = \
-	$(INDICATOR_CFLAGS) \
-	-Wall -Werror \
-	-I$(top_srcdir)/src
-
-simple_client_LDADD = \
-	$(INDICATOR_LIBS) \
-	$(top_builddir)/src/libappindicator.la
-
+pkgappindicatordir = $(pkgpythondir)/appindicator
+pkgappindicator_PYTHON = __init__.py
+appindicatordir = $(pkgpyexecdir)/appindicator
+appindicator_LTLIBRARIES = _appindicator.la
+_appindicator_la_LDFLAGS = -module -avoid-version -export-symbols-regex init_appindicator -lpyglib-2.0-python2.6
+_appindicator_la_LIBADD = $(APPINDICATOR_PYTHON_LIBS) -L$(top_builddir)/src/.libs -lappindicator
+_appindicator_la_SOURCES = appindicatormodule.c
+nodist__appindicator_la_SOURCES = appindicator.c
+CLEANFILES = appindicator.c
+EXTRA_DIST = appindicator.override appindicator-arg-types.py $(defs_DATA)
 all: all-am
 
 .SUFFIXES:
@@ -273,9 +311,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu example/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu bindings/python/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu example/Makefile
+	  $(AUTOMAKE) --gnu bindings/python/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -294,18 +332,39 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+install-appindicatorLTLIBRARIES: $(appindicator_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	test -z "$(appindicatordir)" || $(MKDIR_P) "$(DESTDIR)$(appindicatordir)"
+	@list='$(appindicator_LTLIBRARIES)'; test -n "$(appindicatordir)" || list=; \
+	list2=; for p in $$list; do \
+	  if test -f $$p; then \
+	    list2="$$list2 $$p"; \
+	  else :; fi; \
+	done; \
+	test -z "$$list2" || { \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(appindicatordir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(appindicatordir)"; \
+	}
 
-clean-checkPROGRAMS:
-	@list='$(check_PROGRAMS)'; test -n "$$list" || exit 0; \
-	echo " rm -f" $$list; \
-	rm -f $$list || exit $$?; \
-	test -n "$(EXEEXT)" || exit 0; \
-	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
-	echo " rm -f" $$list; \
-	rm -f $$list
-simple-client$(EXEEXT): $(simple_client_OBJECTS) $(simple_client_DEPENDENCIES) 
-	@rm -f simple-client$(EXEEXT)
-	$(AM_V_CCLD)$(simple_client_LINK) $(simple_client_OBJECTS) $(simple_client_LDADD) $(LIBS)
+uninstall-appindicatorLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(appindicator_LTLIBRARIES)'; test -n "$(appindicatordir)" || list=; \
+	for p in $$list; do \
+	  $(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(appindicatordir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(appindicatordir)/$$f"; \
+	done
+
+clean-appindicatorLTLIBRARIES:
+	-test -z "$(appindicator_LTLIBRARIES)" || rm -f $(appindicator_LTLIBRARIES)
+	@list='$(appindicator_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
+_appindicator.la: $(_appindicator_la_OBJECTS) $(_appindicator_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(_appindicator_la_LINK) -rpath $(appindicatordir) $(_appindicator_la_OBJECTS) $(_appindicator_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -313,7 +372,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/simple_client-simple-client.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/appindicator.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/appindicatormodule.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -339,27 +399,69 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-simple_client-simple-client.o: simple-client.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(simple_client_CFLAGS) $(CFLAGS) -MT simple_client-simple-client.o -MD -MP -MF $(DEPDIR)/simple_client-simple-client.Tpo -c -o simple_client-simple-client.o `test -f 'simple-client.c' || echo '$(srcdir)/'`simple-client.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/simple_client-simple-client.Tpo $(DEPDIR)/simple_client-simple-client.Po
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='simple-client.c' object='simple_client-simple-client.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(simple_client_CFLAGS) $(CFLAGS) -c -o simple_client-simple-client.o `test -f 'simple-client.c' || echo '$(srcdir)/'`simple-client.c
-
-simple_client-simple-client.obj: simple-client.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(simple_client_CFLAGS) $(CFLAGS) -MT simple_client-simple-client.obj -MD -MP -MF $(DEPDIR)/simple_client-simple-client.Tpo -c -o simple_client-simple-client.obj `if test -f 'simple-client.c'; then $(CYGPATH_W) 'simple-client.c'; else $(CYGPATH_W) '$(srcdir)/simple-client.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/simple_client-simple-client.Tpo $(DEPDIR)/simple_client-simple-client.Po
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='simple-client.c' object='simple_client-simple-client.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(simple_client_CFLAGS) $(CFLAGS) -c -o simple_client-simple-client.obj `if test -f 'simple-client.c'; then $(CYGPATH_W) 'simple-client.c'; else $(CYGPATH_W) '$(srcdir)/simple-client.c'; fi`
-
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-pkgappindicatorPYTHON: $(pkgappindicator_PYTHON)
+	@$(NORMAL_INSTALL)
+	test -z "$(pkgappindicatordir)" || $(MKDIR_P) "$(DESTDIR)$(pkgappindicatordir)"
+	@list='$(pkgappindicator_PYTHON)'; dlist=; list2=; test -n "$(pkgappindicatordir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then b=; else b="$(srcdir)/"; fi; \
+	  if test -f $$b$$p; then \
+	    $(am__strip_dir) \
+	    dlist="$$dlist $$f"; \
+	    list2="$$list2 $$b$$p"; \
+	  else :; fi; \
+	done; \
+	for file in $$list2; do echo $$file; done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(pkgappindicatordir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(pkgappindicatordir)" || exit $$?; \
+	done || exit $$?; \
+	if test -n "$$dlist"; then \
+	  if test -z "$(DESTDIR)"; then \
+	    PYTHON=$(PYTHON) $(py_compile) --basedir "$(pkgappindicatordir)" $$dlist; \
+	  else \
+	    PYTHON=$(PYTHON) $(py_compile) --destdir "$(DESTDIR)" --basedir "$(pkgappindicatordir)" $$dlist; \
+	  fi; \
+	else :; fi
+
+uninstall-pkgappindicatorPYTHON:
+	@$(NORMAL_UNINSTALL)
+	@list='$(pkgappindicator_PYTHON)'; test -n "$(pkgappindicatordir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	test -n "$$files" || exit 0; \
+	filesc=`echo "$$files" | sed 's|$$|c|'`; \
+	fileso=`echo "$$files" | sed 's|$$|o|'`; \
+	echo " ( cd '$(DESTDIR)$(pkgappindicatordir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(pkgappindicatordir)" && rm -f $$files || exit $$?; \
+	echo " ( cd '$(DESTDIR)$(pkgappindicatordir)' && rm -f" $$filesc ")"; \
+	cd "$(DESTDIR)$(pkgappindicatordir)" && rm -f $$filesc || exit $$?; \
+	echo " ( cd '$(DESTDIR)$(pkgappindicatordir)' && rm -f" $$fileso ")"; \
+	cd "$(DESTDIR)$(pkgappindicatordir)" && rm -f $$fileso
+install-defsDATA: $(defs_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(defsdir)" || $(MKDIR_P) "$(DESTDIR)$(defsdir)"
+	@list='$(defs_DATA)'; test -n "$(defsdir)" || list=; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(defsdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(defsdir)" || exit $$?; \
+	done
+
+uninstall-defsDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(defs_DATA)'; test -n "$(defsdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(defsdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(defsdir)" && rm -f $$files
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -444,10 +546,12 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
 check: check-am
-all-am: Makefile
+all-am: Makefile $(LTLIBRARIES) $(DATA)
 installdirs:
+	for dir in "$(DESTDIR)$(appindicatordir)" "$(DESTDIR)$(pkgappindicatordir)" "$(DESTDIR)$(defsdir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -465,6 +569,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -475,7 +580,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-checkPROGRAMS clean-generic clean-libtool \
+clean-am: clean-appindicatorLTLIBRARIES clean-generic clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -496,7 +601,8 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-appindicatorLTLIBRARIES install-defsDATA \
+	install-pkgappindicatorPYTHON
 
 install-dvi: install-dvi-am
 
@@ -542,24 +648,40 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-appindicatorLTLIBRARIES uninstall-defsDATA \
+	uninstall-pkgappindicatorPYTHON
 
-.MAKE: check-am install-am install-strip
+.MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean \
-	clean-checkPROGRAMS clean-generic clean-libtool ctags \
-	distclean distclean-compile distclean-generic \
+	clean-appindicatorLTLIBRARIES clean-generic clean-libtool \
+	ctags distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
+	html-am info info-am install install-am \
+	install-appindicatorLTLIBRARIES install-data install-data-am \
+	install-defsDATA install-dvi install-dvi-am install-exec \
 	install-exec-am install-html install-html-am install-info \
 	install-info-am install-man install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am
+	install-pkgappindicatorPYTHON install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-appindicatorLTLIBRARIES uninstall-defsDATA \
+	uninstall-pkgappindicatorPYTHON
 
+appindicator.c: $(defs_DATA) appindicator.override
+
+%.c: %.defs
+	(cd $(srcdir) \
+	 && $(PYGTK_CODEGEN) \
+		--register $(PYGTK_DEFSDIR)/gtk-types.defs \
+		--register $(PYGTK_DEFSDIR)/gdk-types.defs \
+		--load-types appindicator-arg-types.py \
+	    --override $*.override \
+	    --prefix py$* $*.defs) > gen-$*.c \
+	 && cp gen-$*.c $*.c \
+	 && rm -f gen-$*.c
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
