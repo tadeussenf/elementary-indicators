@@ -66,7 +66,7 @@ const DBusGObjectInfo dbus_glib__notification_item_server_object_info = {
   dbus_glib__notification_item_server_methods,
   0,
 "\0",
-"org.ayatana.indicator.application.NotificationItem\0NewIcon\0org.ayatana.indicator.application.NotificationItem\0NewAttentionIcon\0org.ayatana.indicator.application.NotificationItem\0NewStatus\0\0",
-"org.ayatana.indicator.application.NotificationItem\0Id\0org.ayatana.indicator.application.NotificationItem\0Category\0org.ayatana.indicator.application.NotificationItem\0Status\0org.ayatana.indicator.application.NotificationItem\0IconName\0org.ayatana.indicator.application.NotificationItem\0AttentionIconName\0org.ayatana.indicator.application.NotificationItem\0Menu\0\0"
+"org.freedesktop.StatusNotifierItem\0NewIcon\0org.freedesktop.StatusNotifierItem\0NewAttentionIcon\0org.freedesktop.StatusNotifierItem\0NewStatus\0\0",
+"org.freedesktop.StatusNotifierItem\0Id\0org.freedesktop.StatusNotifierItem\0Category\0org.freedesktop.StatusNotifierItem\0Status\0org.freedesktop.StatusNotifierItem\0IconName\0org.freedesktop.StatusNotifierItem\0AttentionIconName\0org.freedesktop.StatusNotifierItem\0IconThemePath\0org.freedesktop.StatusNotifierItem\0Menu\0\0"
 };
 

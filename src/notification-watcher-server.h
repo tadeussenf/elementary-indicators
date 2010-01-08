@@ -53,7 +53,7 @@ G_BEGIN_DECLS
 #endif /* !G_ENABLE_DEBUG */
 
 
-/* NONE:STRING,POINTER (/tmp/dbus-binding-tool-c-marshallers.73LU4U:1) */
+/* NONE:STRING,POINTER (/tmp/dbus-binding-tool-c-marshallers.MPLB6U:1) */
 extern void dbus_glib_marshal__notification_watcher_server_VOID__STRING_POINTER (GClosure     *closure,
                                                                                  GValue       *return_value,
                                                                                  guint         n_param_values,
@@ -97,7 +97,7 @@ dbus_glib_marshal__notification_watcher_server_VOID__STRING_POINTER (GClosure   
 }
 #define dbus_glib_marshal__notification_watcher_server_NONE__STRING_POINTER	dbus_glib_marshal__notification_watcher_server_VOID__STRING_POINTER
 
-/* BOOLEAN:POINTER,POINTER (/tmp/dbus-binding-tool-c-marshallers.73LU4U:2) */
+/* BOOLEAN:POINTER,POINTER (/tmp/dbus-binding-tool-c-marshallers.MPLB6U:2) */
 extern void dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER (GClosure     *closure,
                                                                                      GValue       *return_value,
                                                                                      guint         n_param_values,
@@ -144,7 +144,7 @@ dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER (GClosur
   g_value_set_boolean (return_value, v_return);
 }
 
-/* BOOLEAN:STRING,POINTER (/tmp/dbus-binding-tool-c-marshallers.73LU4U:3) */
+/* BOOLEAN:STRING,POINTER (/tmp/dbus-binding-tool-c-marshallers.MPLB6U:3) */
 extern void dbus_glib_marshal__notification_watcher_server_BOOLEAN__STRING_POINTER (GClosure     *closure,
                                                                                     GValue       *return_value,
                                                                                     guint         n_param_values,
@@ -197,19 +197,19 @@ G_END_DECLS
 
 #include <dbus/dbus-glib.h>
 static const DBusGMethodInfo dbus_glib__notification_watcher_server_methods[] = {
-  { (GCallback) _notification_watcher_server_register_service, dbus_glib_marshal__notification_watcher_server_NONE__STRING_POINTER, 0 },
-  { (GCallback) _notification_watcher_server_registered_services, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 85 },
-  { (GCallback) _notification_watcher_server_protocol_version, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 179 },
-  { (GCallback) _notification_watcher_server_register_notification_host, dbus_glib_marshal__notification_watcher_server_BOOLEAN__STRING_POINTER, 268 },
-  { (GCallback) _notification_watcher_server_is_notification_host_registered, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 362 },
+  { (GCallback) _notification_watcher_server_register_status_notifier_item, dbus_glib_marshal__notification_watcher_server_NONE__STRING_POINTER, 0 },
+  { (GCallback) _notification_watcher_server_registered_status_notifier_items, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 80 },
+  { (GCallback) _notification_watcher_server_protocol_version, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 169 },
+  { (GCallback) _notification_watcher_server_register_notification_host, dbus_glib_marshal__notification_watcher_server_BOOLEAN__STRING_POINTER, 242 },
+  { (GCallback) _notification_watcher_server_is_notification_host_registered, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 320 },
 };
 
 const DBusGObjectInfo dbus_glib__notification_watcher_server_object_info = {
   0,
   dbus_glib__notification_watcher_server_methods,
   5,
-"org.ayatana.indicator.application.NotificationWatcher\0RegisterService\0A\0service\0I\0s\0\0org.ayatana.indicator.application.NotificationWatcher\0RegisteredServices\0S\0services\0O\0F\0N\0as\0\0org.ayatana.indicator.application.NotificationWatcher\0ProtocolVersion\0S\0version\0O\0F\0N\0s\0\0org.ayatana.indicator.application.NotificationWatcher\0RegisterNotificationHost\0S\0service\0I\0s\0\0org.ayatana.indicator.application.NotificationWatcher\0IsNotificationHostRegistered\0S\0hasHost\0O\0F\0N\0b\0\0\0",
-"org.ayatana.indicator.application.NotificationWatcher\0ServiceRegistered\0org.ayatana.indicator.application.NotificationWatcher\0ServiceUnregistered\0org.ayatana.indicator.application.NotificationWatcher\0NotificationHostRegistered\0org.ayatana.indicator.application.NotificationWatcher\0NotificationHostUnregistered\0\0",
+"org.freedesktop.StatusNotifierWatcher\0RegisterStatusNotifierItem\0A\0service\0I\0s\0\0org.freedesktop.StatusNotifierWatcher\0RegisteredStatusNotifierItems\0S\0services\0O\0F\0N\0as\0\0org.freedesktop.StatusNotifierWatcher\0ProtocolVersion\0S\0version\0O\0F\0N\0s\0\0org.freedesktop.StatusNotifierWatcher\0RegisterNotificationHost\0S\0service\0I\0s\0\0org.freedesktop.StatusNotifierWatcher\0IsNotificationHostRegistered\0S\0hasHost\0O\0F\0N\0b\0\0\0",
+"org.freedesktop.StatusNotifierWatcher\0ServiceRegistered\0org.freedesktop.StatusNotifierWatcher\0ServiceUnregistered\0org.freedesktop.StatusNotifierWatcher\0NotificationHostRegistered\0org.freedesktop.StatusNotifierWatcher\0NotificationHostUnregistered\0\0",
 "\0"
 };
 

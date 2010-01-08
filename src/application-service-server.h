@@ -53,7 +53,7 @@ G_BEGIN_DECLS
 #endif /* !G_ENABLE_DEBUG */
 
 
-/* BOOLEAN:POINTER,POINTER (/tmp/dbus-binding-tool-c-marshallers.0MSV4U:1) */
+/* BOOLEAN:POINTER,POINTER (/tmp/dbus-binding-tool-c-marshallers.3A8B6U:1) */
 extern void dbus_glib_marshal__application_service_server_BOOLEAN__POINTER_POINTER (GClosure     *closure,
                                                                                     GValue       *return_value,
                                                                                     guint         n_param_values,
@@ -114,7 +114,7 @@ const DBusGObjectInfo dbus_glib__application_service_server_object_info = {
   dbus_glib__application_service_server_methods,
   1,
 "org.ayatana.indicator.application.service\0GetApplications\0S\0applications\0O\0F\0N\0a(siso)\0\0\0",
-"org.ayatana.indicator.application.service\0ApplicationAdded\0org.ayatana.indicator.application.service\0ApplicationRemoved\0\0",
+"org.ayatana.indicator.application.service\0ApplicationAdded\0org.ayatana.indicator.application.service\0ApplicationRemoved\0org.ayatana.indicator.application.service\0ApplicationIconChanged\0\0",
 "\0"
 };
 

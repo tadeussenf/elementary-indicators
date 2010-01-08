@@ -18,9 +18,9 @@ _dbus_glib_async_data_free (gpointer stuff)
 }
 #endif
 
-#ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_ayatana_indicator_application_NotificationItem
-#define DBUS_GLIB_CLIENT_WRAPPERS_org_ayatana_indicator_application_NotificationItem
+#ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_freedesktop_StatusNotifierItem
+#define DBUS_GLIB_CLIENT_WRAPPERS_org_freedesktop_StatusNotifierItem
 
-#endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_ayatana_indicator_application_NotificationItem */
+#endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_freedesktop_StatusNotifierItem */
 
 G_END_DECLS
