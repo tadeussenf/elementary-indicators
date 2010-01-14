@@ -36,14 +36,13 @@ host_triplet = @host@
 check_PROGRAMS = test-libappindicator$(EXEEXT) \
 	test-libappindicator-dbus-client$(EXEEXT) \
 	test-libappindicator-dbus-server$(EXEEXT) \
+	test-libappindicator-fallback-watcher$(EXEEXT) \
+	test-libappindicator-fallback-item$(EXEEXT) \
 	test-simple-app$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/gtk-doc.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/acinclude.m4 \
+am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -82,6 +81,24 @@ test_libappindicator_dbus_server_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(test_libappindicator_dbus_server_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_test_libappindicator_fallback_item_OBJECTS = test_libappindicator_fallback_item-test-libappindicator-fallback-item.$(OBJEXT)
+test_libappindicator_fallback_item_OBJECTS =  \
+	$(am_test_libappindicator_fallback_item_OBJECTS)
+test_libappindicator_fallback_item_DEPENDENCIES =  \
+	$(am__DEPENDENCIES_1) $(top_builddir)/src/libappindicator.la
+test_libappindicator_fallback_item_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CCLD) $(test_libappindicator_fallback_item_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_test_libappindicator_fallback_watcher_OBJECTS = test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.$(OBJEXT)
+test_libappindicator_fallback_watcher_OBJECTS =  \
+	$(am_test_libappindicator_fallback_watcher_OBJECTS)
+test_libappindicator_fallback_watcher_DEPENDENCIES =  \
+	$(am__DEPENDENCIES_1) $(top_builddir)/src/libappindicator.la
+test_libappindicator_fallback_watcher_LINK = $(LIBTOOL) $(AM_V_lt) \
+	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
+	$(CCLD) $(test_libappindicator_fallback_watcher_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_test_simple_app_OBJECTS =  \
 	test_simple_app-test-simple-app.$(OBJEXT)
 test_simple_app_OBJECTS = $(am_test_simple_app_OBJECTS)
@@ -120,10 +137,14 @@ am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(test_libappindicator_SOURCES) \
 	$(test_libappindicator_dbus_client_SOURCES) \
 	$(test_libappindicator_dbus_server_SOURCES) \
+	$(test_libappindicator_fallback_item_SOURCES) \
+	$(test_libappindicator_fallback_watcher_SOURCES) \
 	$(test_simple_app_SOURCES)
 DIST_SOURCES = $(test_libappindicator_SOURCES) \
 	$(test_libappindicator_dbus_client_SOURCES) \
 	$(test_libappindicator_dbus_server_SOURCES) \
+	$(test_libappindicator_fallback_item_SOURCES) \
+	$(test_libappindicator_fallback_watcher_SOURCES) \
 	$(test_simple_app_SOURCES)
 ETAGS = etags
 CTAGS = ctags
@@ -285,7 +306,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-TESTS = libappindicator-tests test-libappindicator-dbus
+TESTS = test-libappindicator-fallback libappindicator-tests \
+	test-libappindicator-dbus
 DISTCLEANFILES = $(TESTS) $(XML_REPORT) $(HTML_REPORT) \
 	libappindicator-tests-gtester
 
@@ -332,6 +354,33 @@ test_libappindicator_dbus_server_CFLAGS = \
 	-I$(top_srcdir)/src
 
 test_libappindicator_dbus_server_LDADD = \
+	$(INDICATOR_LIBS) \
+	$(top_builddir)/src/libappindicator.la
+
+
+#########################################
+#########################################
+test_libappindicator_fallback_watcher_SOURCES = \
+	test-libappindicator-fallback-watcher.c
+
+test_libappindicator_fallback_watcher_CFLAGS = \
+	$(INDICATOR_CFLAGS) \
+	-Wall -Werror \
+	-I$(top_srcdir)/src
+
+test_libappindicator_fallback_watcher_LDADD = \
+	$(INDICATOR_LIBS) \
+	$(top_builddir)/src/libappindicator.la
+
+test_libappindicator_fallback_item_SOURCES = \
+	test-libappindicator-fallback-item.c
+
+test_libappindicator_fallback_item_CFLAGS = \
+	$(INDICATOR_CFLAGS) \
+	-Wall -Werror \
+	-I$(top_srcdir)/src
+
+test_libappindicator_fallback_item_LDADD = \
 	$(INDICATOR_LIBS) \
 	$(top_builddir)/src/libappindicator.la
 
@@ -408,6 +457,12 @@ test-libappindicator-dbus-client$(EXEEXT): $(test_libappindicator_dbus_client_OB
 test-libappindicator-dbus-server$(EXEEXT): $(test_libappindicator_dbus_server_OBJECTS) $(test_libappindicator_dbus_server_DEPENDENCIES) 
 	@rm -f test-libappindicator-dbus-server$(EXEEXT)
 	$(AM_V_CCLD)$(test_libappindicator_dbus_server_LINK) $(test_libappindicator_dbus_server_OBJECTS) $(test_libappindicator_dbus_server_LDADD) $(LIBS)
+test-libappindicator-fallback-item$(EXEEXT): $(test_libappindicator_fallback_item_OBJECTS) $(test_libappindicator_fallback_item_DEPENDENCIES) 
+	@rm -f test-libappindicator-fallback-item$(EXEEXT)
+	$(AM_V_CCLD)$(test_libappindicator_fallback_item_LINK) $(test_libappindicator_fallback_item_OBJECTS) $(test_libappindicator_fallback_item_LDADD) $(LIBS)
+test-libappindicator-fallback-watcher$(EXEEXT): $(test_libappindicator_fallback_watcher_OBJECTS) $(test_libappindicator_fallback_watcher_DEPENDENCIES) 
+	@rm -f test-libappindicator-fallback-watcher$(EXEEXT)
+	$(AM_V_CCLD)$(test_libappindicator_fallback_watcher_LINK) $(test_libappindicator_fallback_watcher_OBJECTS) $(test_libappindicator_fallback_watcher_LDADD) $(LIBS)
 test-simple-app$(EXEEXT): $(test_simple_app_OBJECTS) $(test_simple_app_DEPENDENCIES) 
 	@rm -f test-simple-app$(EXEEXT)
 	$(AM_V_CCLD)$(test_simple_app_LINK) $(test_simple_app_OBJECTS) $(test_simple_app_LDADD) $(LIBS)
@@ -421,6 +476,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_libappindicator-test-libappindicator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_libappindicator_dbus_client-test-libappindicator-dbus-client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_libappindicator_dbus_server-test-libappindicator-dbus-server.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_libappindicator_fallback_item-test-libappindicator-fallback-item.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_simple_app-test-simple-app.Po@am__quote@
 
 .c.o:
@@ -494,6 +551,38 @@ test_libappindicator_dbus_server-test-libappindicator-dbus-server.obj: test-liba
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test-libappindicator-dbus-server.c' object='test_libappindicator_dbus_server-test-libappindicator-dbus-server.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_dbus_server_CFLAGS) $(CFLAGS) -c -o test_libappindicator_dbus_server-test-libappindicator-dbus-server.obj `if test -f 'test-libappindicator-dbus-server.c'; then $(CYGPATH_W) 'test-libappindicator-dbus-server.c'; else $(CYGPATH_W) '$(srcdir)/test-libappindicator-dbus-server.c'; fi`
+
+test_libappindicator_fallback_item-test-libappindicator-fallback-item.o: test-libappindicator-fallback-item.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_fallback_item_CFLAGS) $(CFLAGS) -MT test_libappindicator_fallback_item-test-libappindicator-fallback-item.o -MD -MP -MF $(DEPDIR)/test_libappindicator_fallback_item-test-libappindicator-fallback-item.Tpo -c -o test_libappindicator_fallback_item-test-libappindicator-fallback-item.o `test -f 'test-libappindicator-fallback-item.c' || echo '$(srcdir)/'`test-libappindicator-fallback-item.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/test_libappindicator_fallback_item-test-libappindicator-fallback-item.Tpo $(DEPDIR)/test_libappindicator_fallback_item-test-libappindicator-fallback-item.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test-libappindicator-fallback-item.c' object='test_libappindicator_fallback_item-test-libappindicator-fallback-item.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_fallback_item_CFLAGS) $(CFLAGS) -c -o test_libappindicator_fallback_item-test-libappindicator-fallback-item.o `test -f 'test-libappindicator-fallback-item.c' || echo '$(srcdir)/'`test-libappindicator-fallback-item.c
+
+test_libappindicator_fallback_item-test-libappindicator-fallback-item.obj: test-libappindicator-fallback-item.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_fallback_item_CFLAGS) $(CFLAGS) -MT test_libappindicator_fallback_item-test-libappindicator-fallback-item.obj -MD -MP -MF $(DEPDIR)/test_libappindicator_fallback_item-test-libappindicator-fallback-item.Tpo -c -o test_libappindicator_fallback_item-test-libappindicator-fallback-item.obj `if test -f 'test-libappindicator-fallback-item.c'; then $(CYGPATH_W) 'test-libappindicator-fallback-item.c'; else $(CYGPATH_W) '$(srcdir)/test-libappindicator-fallback-item.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/test_libappindicator_fallback_item-test-libappindicator-fallback-item.Tpo $(DEPDIR)/test_libappindicator_fallback_item-test-libappindicator-fallback-item.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test-libappindicator-fallback-item.c' object='test_libappindicator_fallback_item-test-libappindicator-fallback-item.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_fallback_item_CFLAGS) $(CFLAGS) -c -o test_libappindicator_fallback_item-test-libappindicator-fallback-item.obj `if test -f 'test-libappindicator-fallback-item.c'; then $(CYGPATH_W) 'test-libappindicator-fallback-item.c'; else $(CYGPATH_W) '$(srcdir)/test-libappindicator-fallback-item.c'; fi`
+
+test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.o: test-libappindicator-fallback-watcher.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_fallback_watcher_CFLAGS) $(CFLAGS) -MT test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.o -MD -MP -MF $(DEPDIR)/test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.Tpo -c -o test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.o `test -f 'test-libappindicator-fallback-watcher.c' || echo '$(srcdir)/'`test-libappindicator-fallback-watcher.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.Tpo $(DEPDIR)/test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test-libappindicator-fallback-watcher.c' object='test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_fallback_watcher_CFLAGS) $(CFLAGS) -c -o test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.o `test -f 'test-libappindicator-fallback-watcher.c' || echo '$(srcdir)/'`test-libappindicator-fallback-watcher.c
+
+test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.obj: test-libappindicator-fallback-watcher.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_fallback_watcher_CFLAGS) $(CFLAGS) -MT test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.obj -MD -MP -MF $(DEPDIR)/test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.Tpo -c -o test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.obj `if test -f 'test-libappindicator-fallback-watcher.c'; then $(CYGPATH_W) 'test-libappindicator-fallback-watcher.c'; else $(CYGPATH_W) '$(srcdir)/test-libappindicator-fallback-watcher.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.Tpo $(DEPDIR)/test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='test-libappindicator-fallback-watcher.c' object='test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_libappindicator_fallback_watcher_CFLAGS) $(CFLAGS) -c -o test_libappindicator_fallback_watcher-test-libappindicator-fallback-watcher.obj `if test -f 'test-libappindicator-fallback-watcher.c'; then $(CYGPATH_W) 'test-libappindicator-fallback-watcher.c'; else $(CYGPATH_W) '$(srcdir)/test-libappindicator-fallback-watcher.c'; fi`
 
 test_simple_app-test-simple-app.o: test-simple-app.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_simple_app_CFLAGS) $(CFLAGS) -MT test_simple_app-test-simple-app.o -MD -MP -MF $(DEPDIR)/test_simple_app-test-simple-app.Tpo -c -o test_simple_app-test-simple-app.o `test -f 'test-simple-app.c' || echo '$(srcdir)/'`test-simple-app.c
@@ -810,6 +899,11 @@ uninstall-am:
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am
 
+
+test-libappindicator-fallback: test-libappindicator-fallback-watcher test-libappindicator-fallback-item Makefile.am
+	@echo "#!/bin/sh" > $@
+	@echo $(DBUS_RUNNER) --task ./test-libappindicator-fallback-watcher --task-name Watcher --ignore-return --task ./test-libappindicator-fallback-item --task-name Item >> $@
+	@chmod +x $@
 
 libappindicator-tests: libappindicator-tests-gtester Makefile.am
 	@echo "#!/bin/sh" > $@
