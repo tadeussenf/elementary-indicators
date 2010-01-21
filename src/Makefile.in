@@ -137,6 +137,7 @@ PROGRAMS = $(libexec_PROGRAMS)
 am_indicator_application_service_OBJECTS =  \
 	indicator_application_service-application-service.$(OBJEXT) \
 	indicator_application_service-application-service-appstore.$(OBJEXT) \
+	indicator_application_service-application-service-lru-file.$(OBJEXT) \
 	indicator_application_service-application-service-marshal.$(OBJEXT) \
 	indicator_application_service-application-service-watcher.$(OBJEXT)
 indicator_application_service_OBJECTS =  \
@@ -373,6 +374,8 @@ indicator_application_service_SOURCES = \
 	application-service.c \
 	application-service-appstore.h \
 	application-service-appstore.c \
+	application-service-lru-file.h \
+	application-service-lru-file.c \
 	application-service-marshal.h \
 	application-service-marshal.c \
 	application-service-server.h \
@@ -595,6 +598,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_application_service-application-service-appstore.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_application_service-application-service-lru-file.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_application_service-application-service-marshal.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_application_service-application-service-watcher.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/indicator_application_service-application-service.Po@am__quote@
@@ -690,6 +694,22 @@ indicator_application_service-application-service-appstore.obj: application-serv
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='application-service-appstore.c' object='indicator_application_service-application-service-appstore.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_application_service_CFLAGS) $(CFLAGS) -c -o indicator_application_service-application-service-appstore.obj `if test -f 'application-service-appstore.c'; then $(CYGPATH_W) 'application-service-appstore.c'; else $(CYGPATH_W) '$(srcdir)/application-service-appstore.c'; fi`
+
+indicator_application_service-application-service-lru-file.o: application-service-lru-file.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_application_service_CFLAGS) $(CFLAGS) -MT indicator_application_service-application-service-lru-file.o -MD -MP -MF $(DEPDIR)/indicator_application_service-application-service-lru-file.Tpo -c -o indicator_application_service-application-service-lru-file.o `test -f 'application-service-lru-file.c' || echo '$(srcdir)/'`application-service-lru-file.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/indicator_application_service-application-service-lru-file.Tpo $(DEPDIR)/indicator_application_service-application-service-lru-file.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='application-service-lru-file.c' object='indicator_application_service-application-service-lru-file.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_application_service_CFLAGS) $(CFLAGS) -c -o indicator_application_service-application-service-lru-file.o `test -f 'application-service-lru-file.c' || echo '$(srcdir)/'`application-service-lru-file.c
+
+indicator_application_service-application-service-lru-file.obj: application-service-lru-file.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_application_service_CFLAGS) $(CFLAGS) -MT indicator_application_service-application-service-lru-file.obj -MD -MP -MF $(DEPDIR)/indicator_application_service-application-service-lru-file.Tpo -c -o indicator_application_service-application-service-lru-file.obj `if test -f 'application-service-lru-file.c'; then $(CYGPATH_W) 'application-service-lru-file.c'; else $(CYGPATH_W) '$(srcdir)/application-service-lru-file.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/indicator_application_service-application-service-lru-file.Tpo $(DEPDIR)/indicator_application_service-application-service-lru-file.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='application-service-lru-file.c' object='indicator_application_service-application-service-lru-file.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_application_service_CFLAGS) $(CFLAGS) -c -o indicator_application_service-application-service-lru-file.obj `if test -f 'application-service-lru-file.c'; then $(CYGPATH_W) 'application-service-lru-file.c'; else $(CYGPATH_W) '$(srcdir)/application-service-lru-file.c'; fi`
 
 indicator_application_service-application-service-marshal.o: application-service-marshal.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(indicator_application_service_CFLAGS) $(CFLAGS) -MT indicator_application_service-application-service-marshal.o -MD -MP -MF $(DEPDIR)/indicator_application_service-application-service-marshal.Tpo -c -o indicator_application_service-application-service-marshal.o `test -f 'application-service-marshal.c' || echo '$(srcdir)/'`application-service-marshal.c
