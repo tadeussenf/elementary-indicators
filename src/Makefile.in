@@ -113,8 +113,8 @@ LTLIBRARIES = $(applicationlib_LTLIBRARIES) $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libappindicator_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__objects_1 =
-am__objects_2 = libappindicator_la-app-indicator-enum-types.lo
-am_libappindicator_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
+am_libappindicator_la_OBJECTS = $(am__objects_1) \
+	libappindicator_la-app-indicator-enum-types.lo \
 	libappindicator_la-app-indicator.lo
 libappindicator_la_OBJECTS = $(am_libappindicator_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
@@ -340,7 +340,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 CLEANFILES = stamp-enum-types stamp-marshal $(BUILT_SOURCES)
 DISTCLEANFILES = $(glib_enum_h) $(glib_enum_c) $(marshal_h) \
-	$(marshal_c)
+	$(marshal_c) libappindicator/app-indicator-enum-types.c
 BUILT_SOURCES = $(glib_enum_h) $(glib_enum_c) $(marshal_h) \
 	$(marshal_c) $(DBUS_SPECS:.xml=-client.h) \
 	$(DBUS_SPECS:.xml=-server.h)
@@ -402,7 +402,7 @@ glib_marshal_prefix = _application_service_marshal
 pkgconfig_DATA = libappindicator/appindicator-0.1.pc
 pkgconfigdir = $(libdir)/pkgconfig
 glib_enum_h = libappindicator/app-indicator-enum-types.h
-glib_enum_c = libappindicator/app-indicator-enum-types.c
+glib_enum_c = libappindicator/app-indicator-enum-types.gen.c
 glib_enum_headers = $(libappindicator_headers)
 lib_LTLIBRARIES = \
 	libappindicator.la
@@ -417,7 +417,7 @@ libappindicatorinclude_HEADERS = \
 
 libappindicator_la_SOURCES = \
 	$(libappindicator_headers) \
-	$(glib_enum_c) \
+	libappindicator/app-indicator-enum-types.c \
 	notification-watcher-client.h \
 	notification-item-server.h \
 	libappindicator/app-indicator.c
@@ -1047,6 +1047,17 @@ $(marshal_c): $(marshal_h)
 	$(srcdir)/$(glib_marshal_list)) > xgen-mc \
 	&& cp xgen-mc $(marshal_c) \
 	&& rm -f xgen-mc
+
+libappindicator/app-indicator-enum-types.c: libappindicator/app-indicator-enum-types.gen.c
+	sed -e "s|\"passive\"|\"Passive\"|" \
+	    -e "s|\"active\"|\"Active\"|" \
+	    -e "s|\"attention\"|\"NeedsAttention\"|" \
+	    -e "s|\"application-status\"|\"ApplicationStatus\"|" \
+	    -e "s|\"communications\"|\"Communications\"|" \
+	    -e "s|\"system-services\"|\"SystemServices\"|" \
+	    -e "s|\"hardware\"|\"Hardware\"|" \
+	    -e "s|\"other\"|\"Other\"|" \
+	       $< > $@
 
 %-client.h: %.xml
 	dbus-binding-tool \
