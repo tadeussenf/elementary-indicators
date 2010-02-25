@@ -83,7 +83,7 @@ const <link linkend="gchar">gchar</link> *       <link linkend="app-indicator-ge
   &quot;<link linkend="AppIndicator--icon-name">icon-name</link>&quot;                <link linkend="gchar">gchar</link>*                : Read / Write
   &quot;<link linkend="AppIndicator--icon-theme-path">icon-theme-path</link>&quot;          <link linkend="gchar">gchar</link>*                : Read / Write / Construct Only
   &quot;<link linkend="AppIndicator--id">id</link>&quot;                       <link linkend="gchar">gchar</link>*                : Read / Write / Construct Only
-  &quot;<link linkend="AppIndicator--menu">menu</link>&quot;                     <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="AppIndicator--menu">menu</link>&quot;                     <link linkend="DBusGObjectPath">DBusGObjectPath</link>*      : Read
   &quot;<link linkend="AppIndicator--status">status</link>&quot;                   <link linkend="gchar">gchar</link>*                : Read / Write
 </synopsis>
 </refsect1>
@@ -489,8 +489,8 @@ Wrapper function for property <link linkend="AppIndicator-attention-icon"><type>
                                                          <link linkend="GtkMenu">GtkMenu</link> *menu);</programlisting>
 <para>
 Sets the menu that should be shown when the Application Indicator
-		is clicked on in the panel.  An application indicator will not
-		be rendered unless it has a menu.</para>
+        is clicked on in the panel.  An application indicator will not
+        be rendered unless it has a menu.</para>
 <para>
 </para><variablelist role="params">
 <varlistentry><term><parameter>self</parameter>&#160;:</term>
@@ -624,9 +624,8 @@ Gets the menu being used for this application indicator.</para>
 <para>An ID that should be unique, but used consistently by this program and it's indicator.</para><para>Default value: NULL</para>
 </refsect2>
 <refsect2 id="AppIndicator--menu" role="property"><title>The <literal>&quot;menu&quot;</literal> property</title>
-<indexterm zone="AppIndicator--menu"><primary sortas="AppIndicator:menu">AppIndicator:menu</primary></indexterm><programlisting>  &quot;menu&quot;                     <link linkend="gchar">gchar</link>*                : Read</programlisting>
-<para>A method for getting the menu path as a string for DBus.</para><para>Default value: NULL</para>
-</refsect2>
+<indexterm zone="AppIndicator--menu"><primary sortas="AppIndicator:menu">AppIndicator:menu</primary></indexterm><programlisting>  &quot;menu&quot;                     <link linkend="DBusGObjectPath">DBusGObjectPath</link>*      : Read</programlisting>
+<para>A method for getting the menu path as a string for DBus.</para></refsect2>
 <refsect2 id="AppIndicator--status" role="property"><title>The <literal>&quot;status&quot;</literal> property</title>
 <indexterm zone="AppIndicator--status"><primary sortas="AppIndicator:status">AppIndicator:status</primary></indexterm><programlisting>  &quot;status&quot;                   <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
 <para>Whether the indicator is shown or requests attention.  Defaults to 'off'.</para><para>Default value: NULL</para>

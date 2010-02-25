@@ -254,9 +254,7 @@ href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
 >gchar</a>*                : Read / Write / Construct Only
   "<a
 href="/usr/share/gtk-doc/html/libappindicator/AppIndicator.html#AppIndicator--menu"
->menu</a>"                     <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a>*                : Read
+>menu</a>"                     DBusGObjectPath*      : Read
   "<a
 href="/usr/share/gtk-doc/html/libappindicator/AppIndicator.html#AppIndicator--status"
 >status</a>"                   <a
@@ -899,8 +897,8 @@ href="http://library.gnome.org/devel/gtk/unstable/GtkMenu.html"
 >GtkMenu</a> *menu);</pre>
 <p>
 Sets the menu that should be shown when the Application Indicator
-		is clicked on in the panel.  An application indicator will not
-		be rendered unless it has a menu.</p>
+        is clicked on in the panel.  An application indicator will not
+        be rendered unless it has a menu.</p>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -1195,11 +1193,8 @@ href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
 <hr>
 <div class="refsect2" title='The "menu" property'>
 <a name="AppIndicator--menu"></a><h3>The <code class="literal">"menu"</code> property</h3>
-<pre class="programlisting">  "menu"                     <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
->gchar</a>*                : Read</pre>
+<pre class="programlisting">  "menu"                     DBusGObjectPath*      : Read</pre>
 <p>A method for getting the menu path as a string for DBus.</p>
-<p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2" title='The "status" property'>
