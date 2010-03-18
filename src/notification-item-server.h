@@ -66,7 +66,7 @@ const DBusGObjectInfo dbus_glib__notification_item_server_object_info = {
   dbus_glib__notification_item_server_methods,
   0,
 "\0",
-"org.freedesktop.StatusNotifierItem\0NewIcon\0org.freedesktop.StatusNotifierItem\0NewAttentionIcon\0org.freedesktop.StatusNotifierItem\0NewStatus\0\0",
-"org.freedesktop.StatusNotifierItem\0Id\0org.freedesktop.StatusNotifierItem\0Category\0org.freedesktop.StatusNotifierItem\0Status\0org.freedesktop.StatusNotifierItem\0IconName\0org.freedesktop.StatusNotifierItem\0AttentionIconName\0org.freedesktop.StatusNotifierItem\0IconThemePath\0org.freedesktop.StatusNotifierItem\0Menu\0\0"
+"org.kde.StatusNotifierItem\0NewIcon\0org.kde.StatusNotifierItem\0NewAttentionIcon\0org.kde.StatusNotifierItem\0NewStatus\0\0",
+"org.kde.StatusNotifierItem\0Id\0org.kde.StatusNotifierItem\0Category\0org.kde.StatusNotifierItem\0Status\0org.kde.StatusNotifierItem\0IconName\0org.kde.StatusNotifierItem\0AttentionIconName\0org.kde.StatusNotifierItem\0IconThemePath\0org.kde.StatusNotifierItem\0Menu\0\0"
 };
 

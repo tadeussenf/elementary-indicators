@@ -18,9 +18,9 @@ _dbus_glib_async_data_free (gpointer stuff)
 }
 #endif
 
-#ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_freedesktop_StatusNotifierItem
-#define DBUS_GLIB_CLIENT_WRAPPERS_org_freedesktop_StatusNotifierItem
+#ifndef DBUS_GLIB_CLIENT_WRAPPERS_org_kde_StatusNotifierItem
+#define DBUS_GLIB_CLIENT_WRAPPERS_org_kde_StatusNotifierItem
 
-#endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_freedesktop_StatusNotifierItem */
+#endif /* defined DBUS_GLIB_CLIENT_WRAPPERS_org_kde_StatusNotifierItem */
 
 G_END_DECLS

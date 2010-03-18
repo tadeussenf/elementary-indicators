@@ -198,18 +198,18 @@ G_END_DECLS
 #include <dbus/dbus-glib.h>
 static const DBusGMethodInfo dbus_glib__notification_watcher_server_methods[] = {
   { (GCallback) _notification_watcher_server_register_status_notifier_item, dbus_glib_marshal__notification_watcher_server_NONE__STRING_POINTER, 0 },
-  { (GCallback) _notification_watcher_server_registered_status_notifier_items, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 80 },
-  { (GCallback) _notification_watcher_server_protocol_version, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 169 },
-  { (GCallback) _notification_watcher_server_register_notification_host, dbus_glib_marshal__notification_watcher_server_BOOLEAN__STRING_POINTER, 242 },
-  { (GCallback) _notification_watcher_server_is_notification_host_registered, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 320 },
+  { (GCallback) _notification_watcher_server_registered_status_notifier_items, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 72 },
+  { (GCallback) _notification_watcher_server_protocol_version, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 153 },
+  { (GCallback) _notification_watcher_server_register_notification_host, dbus_glib_marshal__notification_watcher_server_BOOLEAN__STRING_POINTER, 218 },
+  { (GCallback) _notification_watcher_server_is_notification_host_registered, dbus_glib_marshal__notification_watcher_server_BOOLEAN__POINTER_POINTER, 288 },
 };
 
 const DBusGObjectInfo dbus_glib__notification_watcher_server_object_info = {
   0,
   dbus_glib__notification_watcher_server_methods,
   5,
-"org.freedesktop.StatusNotifierWatcher\0RegisterStatusNotifierItem\0A\0service\0I\0s\0\0org.freedesktop.StatusNotifierWatcher\0RegisteredStatusNotifierItems\0S\0services\0O\0F\0N\0as\0\0org.freedesktop.StatusNotifierWatcher\0ProtocolVersion\0S\0version\0O\0F\0N\0s\0\0org.freedesktop.StatusNotifierWatcher\0RegisterNotificationHost\0S\0service\0I\0s\0\0org.freedesktop.StatusNotifierWatcher\0IsNotificationHostRegistered\0S\0hasHost\0O\0F\0N\0b\0\0\0",
-"org.freedesktop.StatusNotifierWatcher\0ServiceRegistered\0org.freedesktop.StatusNotifierWatcher\0ServiceUnregistered\0org.freedesktop.StatusNotifierWatcher\0NotificationHostRegistered\0org.freedesktop.StatusNotifierWatcher\0NotificationHostUnregistered\0\0",
+"org.kde.StatusNotifierWatcher\0RegisterStatusNotifierItem\0A\0service\0I\0s\0\0org.kde.StatusNotifierWatcher\0RegisteredStatusNotifierItems\0S\0services\0O\0F\0N\0as\0\0org.kde.StatusNotifierWatcher\0ProtocolVersion\0S\0version\0O\0F\0N\0s\0\0org.kde.StatusNotifierWatcher\0RegisterNotificationHost\0S\0service\0I\0s\0\0org.kde.StatusNotifierWatcher\0IsNotificationHostRegistered\0S\0hasHost\0O\0F\0N\0b\0\0\0",
+"org.kde.StatusNotifierWatcher\0ServiceRegistered\0org.kde.StatusNotifierWatcher\0ServiceUnregistered\0org.kde.StatusNotifierWatcher\0NotificationHostRegistered\0org.kde.StatusNotifierWatcher\0NotificationHostUnregistered\0\0",
 "\0"
 };
 
