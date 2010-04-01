@@ -17,6 +17,9 @@ AppIndicator
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO APP_INDICATOR_TYPE ##### -->
 <para>
 
@@ -214,6 +217,7 @@ AppIndicator
 
 </para>
 
+@void: 
 @Returns: 
 
 
