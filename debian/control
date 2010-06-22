@@ -93,11 +93,13 @@ Description:  Application Indicators
  .
  This package contains developer documentation.
 
-Package: libappindicator0.0-cil
+Package: libappindicator0.1-cil
 Section: cli-mono
 Architecture: all
-Replaces: libappindicator0-cil (<= 0.0.19-0ubuntu4~)
-Conflicts: libappindicator0-cil (<= 0.0.19-0ubuntu4~)
+Replaces: libappindicator0-cil (<= 0.0.19-0ubuntu4),
+          libappindicator0.0-cil (<= 0.2.0-0ubuntu4)
+Conflicts: libappindicator0-cil (<= 0.0.19-0ubuntu4)
+Provides: libappindicator0.0-cil
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          ${cli:Depends}
@@ -110,12 +112,12 @@ Description: CLI bindings for libappindicator
 Package: libappindicator0.1-cil-dev
 Section: libdevel
 Architecture: all
-Replaces: libappindicator-cil-dev (<= 0.0.19-0ubuntu4~)
-Conflicts: libappindicator-cil-dev (<= 0.0.19-0ubuntu4~)
+Replaces: libappindicator-cil-dev (<= 0.0.19-0ubuntu4)
+Conflicts: libappindicator-cil-dev (<= 0.0.19-0ubuntu4)
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          ${cli:Depends},
-         libappindicator0.0-cil (= ${binary:Version})
+         libappindicator0.1-cil (= ${binary:Version})
 Description: Application Indicators
  A library and indicator to take menus from applications and place them in
  the panel.
