@@ -1,3 +1,9 @@
+indicator-application (0.4.0-0ubuntu2) precise; urgency=low
+
+  * no change rebuild for libindicator7
+
+ -- Ken VanDine <ken.vandine@canonical.com>  Wed, 25 Jan 2012 10:11:11 -0500
+
 indicator-application (0.4.0-0ubuntu1) oneiric; urgency=low
 
   * New upstream release.
