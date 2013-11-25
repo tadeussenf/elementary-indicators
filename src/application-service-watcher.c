@@ -24,6 +24,7 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config.h"
 #endif
 
+#include <stdlib.h>
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <dbus/dbus-glib-bindings.h>
@@ -158,8 +159,9 @@ application_service_watcher_init (ApplicationServiceWatcher *self)
 	GError * error = NULL;
 	DBusGConnection * session_bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
 	if (error != NULL) {
-		g_error("Unable to get session bus: %s", error->message);
+		g_warning("Unable to get session bus: %s", error->message);
 		g_error_free(error);
+		exit(0);
 		return;
 	}
 
@@ -284,6 +286,37 @@ get_name_cb (DBusGProxy * proxy, guint status, GError * error, gpointer data)
 			status != DBUS_REQUEST_NAME_REPLY_ALREADY_OWNER) {
 		g_warning("Unable to get watcher name '%s'", NOTIFICATION_WATCHER_DBUS_ADDR);
 		return;
+	}
+
+	/* After we've got the name we can request upstart to trigger
+	   the jobs of any application indicators that need to start
+	   at desktop init time. */
+
+	GError * spawn_error = NULL;
+	gchar * argv[] = {
+	          "initctl",
+	          "--session",
+	          "--user",
+	          "emit",
+	          "--no-wait",
+	          "appindicators-start",
+	          NULL,
+	          };
+
+	g_spawn_async(NULL, /* Working Directory */
+	              argv,
+	              NULL, /* environment */
+	              G_SPAWN_SEARCH_PATH,
+	              NULL, NULL, /* child setup function */
+	              NULL, /* Pid */
+	              &spawn_error);
+
+	if (spawn_error != NULL) {
+		/* NOTE: When we get to the point where we can start
+		   assuming upstart user sessions this can be escillated
+		   to a warning or higher */
+		g_debug("Unable to signal appindicators-start to upstart: %s", spawn_error->message);
+		g_error_free(spawn_error);
 	}
 
 	return;
