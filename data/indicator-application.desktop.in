@@ -5,5 +5,6 @@ Exec=@pkglibexecdir@/indicator-application-service
 StartupNotify=false
 Terminal=false
 OnlyShowIn=Unity;GNOME;
+NotShowIn=ubuntu;
 NoDisplay=true
 AutostartCondition=GNOME3 unless-session gnome

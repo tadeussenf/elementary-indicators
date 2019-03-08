@@ -1,3 +1,11 @@
+indicator-application (12.10.1+18.04.20190308.1-0ubuntu1) bionic; urgency=medium
+
+  [ Iain Lane ]
+  * data/indicator-application.desktop.in: Don't run in ubuntu sessions
+    (LP: #1819103)
+
+ -- iain@orangesquash.org.uk <iain@orangesquash.org.uk>  Fri, 08 Mar 2019 15:36:29 +0000
+
 indicator-application (12.10.1+17.04.20161201-0ubuntu1) zesty; urgency=medium
 
   [ Michael Terry ]
