@@ -10,6 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: setup
-      run: apt install -y debhelper dh-translations dh-autoreconf dbus-test-runner gnome-common xvfb libglib2.0-dev libgtk-3-dev libdbus-glib-1-dev libjson-glib-dev intltool libappindicator3-dev libindicator3-dev libdbusmenu-glib-dev libdbusmenu-gtk3-dev devscripts
+      run: sudo apt install -y debhelper dh-translations dh-autoreconf dbus-test-runner gnome-common xvfb libglib2.0-dev libgtk-3-dev libdbus-glib-1-dev libjson-glib-dev intltool libappindicator3-dev libindicator3-dev libdbusmenu-glib-dev libdbusmenu-gtk3-dev devscripts
     - name: build
       run: debuild -i -us -uc -b
